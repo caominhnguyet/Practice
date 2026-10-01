@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>YOUR CART</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        body {
+            background-image: url("Images/background2.jpg");
+            background-size: 100%;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <h1 class="header">
+        YOUR CART
+    </h1>
+
+
+    <!-- Danh sách sản phẩm -->
+
+    <div id="cart-items"></div>
+
+
+    <!-- Tổng tiền -->
+
+    <div class="cart-total">
+
+        <h2>
+            TOTAL:
+            <span id="total-price">0đ</span>
+        </h2>
+
+        <button onclick="payCart()">THANH TOÁN</button>
+
+    </div>
+
+
+    <!-- BILL THANH TOÁN -->
+
+    <div id="payment-form">
+
+        <div class="payment-card">
+
+            <h2>ORDER BILL</h2>
+
+            <!-- Sản phẩm đã chọn -->
+
+            <div id="selected-products"></div>
+
+            <hr>
+
+            <h3>
+                TOTAL:
+                <span id="payment-total">0đ</span>
+            </h3>
+
+
+            <!-- Thông tin giao hàng -->
+
+            <h3>SHIPPING INFORMATION</h3>
+
+            <label>Họ và tên:</label>
+
+            <input type="text"
+                   id="fullname"
+                   placeholder="Nhập họ và tên">
+
+
+            <label>Số điện thoại:</label>
+
+            <input type="text"
+                   id="phone"
+                   placeholder="Nhập số điện thoại">
+
+
+            <label>Địa chỉ:</label>
+
+            <input type="text"
+                   id="address"
+                   placeholder="Nhập địa chỉ nhận hàng">
+
+
+            <!-- Phương thức thanh toán -->
+
+            <h3>PAYMENT METHOD</h3>
+
+            <label>
+
+                <input type="radio"
+                       name="payment"
+                       value="COD">
+
+                Thanh toán khi nhận hàng (COD)
+
+            </label>
+
+
+            <div id="noticecod" style="display:flex;">
+
+                <p>
+                    Vui lòng ấn "Xác Nhận Đặt Hàng" và ấn "OK",
+                    chụp lại BILL ORDER gửi cho page shop IG
+                </p>
+
+            </div>
+
+
+            <br>
+
+
+            <label>
+
+                <input type="radio"
+                       name="payment"
+                       value="Bank">
+
+                Chuyển khoản ngân hàng
+
+            </label>
+
+
+            <div id="noticeqr" style="display:flex;">
+
+                <p>
+                    Vui lòng ấn "Xác Nhận Đặt Hàng"
+                </p>
+
+            </div>
+
+
+            <!-- QR THANH TOÁN -->
+
+            <div id="qr-payment" style="display: none;">
+
+                <h3>QUÉT MÃ QR ĐỂ THANH TOÁN</h3>
+
+                <img src="Images/qr-bank.png"
+                     alt="Mã QR ngân hàng">
+
+                <p>
+                    Vui lòng quét mã QR để thực hiện chuyển khoản
+                    và chụp bill gửi cho page shop IG.
+                </p>
+
+                <p>
+                    Ấn "Đóng" khi đã hoàn tất thanh toán
+                </p>
+
+            </div>
+
+
+            <br><br>
+
+
+            <button onclick="confirmOrder()">
+                XÁC NHẬN ĐẶT HÀNG
+            </button>
+
+
+            <button onclick="closePayment()">
+                ĐÓNG
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- HIỂN THỊ SẢN PHẨM -->
+
+    <script>
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        let cartItems = document.getElementById("cart-items");
+
+
+        // HIỂN THỊ GIỎ HÀNG
+
+        function displayCart() {
+
+            cartItems.innerHTML = "";
+
+
+            cart.forEach(function(product, index) {
+
+                cartItems.innerHTML += `
+
+                    <div>
+
+                        <input type="checkbox"
+                               class="product-check"
+                               data-index="${index}"
+                               onchange="calculateSelectedTotal()">
+
+                        <label>
+                            Chọn sản phẩm này
+                        </label>
+
+                        <br>
+
+
+                        <img src="${product.image}"
+                             width="100">
+
+
+                        <h2>
+                            ${product.name}
+                        </h2>
+
+
+                        <p>
+                            ${product.price}
+                        </p>
+
+
+                        <p>
+                            Số lượng: ${product.quantity || 1}
+                        </p>
+
+
+                        <button onclick="removeProduct(${index})">
+                            XÓA SẢN PHẨM
+                        </button>
+
+
+                        <br><br>
+
+                    </div>
+
+                `;
+
+            });
+
+
+            // Tính TOTAL của toàn bộ giỏ hàng
+
+            calculateCartTotal();
+
+        }
+
+
+
+        // XÓA SẢN PHẨM
+
+        function removeProduct(index) {
+
+            cart.splice(index, 1);
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            // Hiển thị lại giỏ hàng
+            // và cập nhật TOTAL
+
+            displayCart();
+
+        }
+
+
+
+        // TÍNH TOTAL TOÀN BỘ GIỎ HÀNG
+
+        function calculateCartTotal() {
+
+            let total = 0;
+
+
+            cart.forEach(function(product) {
+
+                let price = parseInt(
+                    product.price.replace(/\D/g, "")
+                );
+
+
+                total += price * (product.quantity || 1);
+
+            });
+
+
+            document.getElementById("total-price").innerText =
+                total.toLocaleString("vi-VN") + "đ";
+
+        }
+
+
+
+        // HIỂN THỊ GIỎ HÀNG KHI MỞ TRANG
+
+        displayCart();
+
+
+    </script>
+
+
+    <!-- File JavaScript -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>

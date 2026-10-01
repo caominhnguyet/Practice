@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+    <meta charset="UTF-8">
+    <title>ORDER INVOICE</title>
+
+    <style>
+        body {
+            background-image: url("Images/background.jpg");
+            font-family: 'Franklin Gothic Medium', sans-serif;
+            color: black;
+        }
+
+        .invoice {
+            width: 700px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .invoice h1 {
+            text-align: center;
+            color: #660066;
+            margin-bottom: 40px;
+        }
+
+        .customer-info {
+            margin-bottom: 30px;
+        }
+
+        .customer-info h2,
+        .invoice h2 {
+            color: #660066;
+        }
+
+        .customer-info p {
+            margin: 8px 0;
+        }
+
+        .invoice-product {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .invoice-product img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 3px solid black;
+        }
+
+        .invoice-product-info {
+            flex: 1;
+        }
+
+        .invoice-product-info h3 {
+            margin: 0 0 10px;
+        }
+
+        .invoice-product-info p {
+            margin: 0;
+        }
+
+        .invoice-total {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .invoice-total h2 {
+            color: #660066;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="invoice">
+
+        <h1>ORDER INVOICE</h1>
+
+        <div class="customer-info">
+
+            <h2>SHIPPING INFORMATION</h2>
+
+            <p>
+                <strong>Họ và tên:</strong>
+                <span id="fullname"></span>
+            </p>
+
+            <p>
+                <strong>Số điện thoại:</strong>
+                <span id="phone"></span>
+            </p>
+
+            <p>
+                <strong>Địa chỉ:</strong>
+                <span id="address"></span>
+            </p>
+
+            <p>
+                <strong>Phương thức thanh toán:</strong>
+                <span id="payment"></span>
+            </p>
+
+        </div>
+
+        <h2>ORDER PRODUCTS</h2>
+
+        <div id="invoice-products"></div>
+
+        <div class="invoice-total">
+
+            <h2>
+                TOTAL:
+                <span id="total-price">0đ</span>
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+    /* LẤY THÔNG TIN ĐƠN HÀNG */
+
+    let order =
+        JSON.parse(localStorage.getItem("order"));
+
+
+    /* KIỂM TRA ĐƠN HÀNG */
+
+    if (!order) {
+
+        document.querySelector(".invoice").innerHTML =
+            "<h2>Không tìm thấy thông tin đơn hàng.</h2>";
+
+    } else {
+
+        /* THÔNG TIN KHÁCH HÀNG */
+
+        document.getElementById("fullname").textContent =
+            order.fullname;
+
+        document.getElementById("phone").textContent =
+            order.phone;
+
+        document.getElementById("address").textContent =
+            order.address;
+
+        document.getElementById("payment").textContent =
+            order.payment;
+
+
+        /* HIỂN THỊ SẢN PHẨM */
+
+        let productsHTML = "";
+        let total = 0;
+
+        order.products.forEach(function(product) {
+
+            let quantity = product.quantity || 1;
+
+            /* Tính giá theo số lượng */
+            total +=
+                getPriceNumber(product.price) * quantity;
+
+
+            productsHTML += `
+
+                <div class="invoice-product">
+
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}"
+                    >
+
+                    <div class="invoice-product-info">
+
+                        <h3>${product.name}</h3>
+
+                        <div class="invoice-price">
+
+                            <span>
+                                ${formatPrice(product.price)}
+                            </span>
+
+                            <span>
+                                x ${quantity}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+        });
+
+
+        document.getElementById("invoice-products").innerHTML =
+            productsHTML;
+
+
+        /* HIỂN THỊ TỔNG TIỀN */
+
+        document.getElementById("total-price").textContent =
+            formatPrice(total);
+    }
+
+
+    /* CHUYỂN GIÁ THÀNH SỐ */
+
+    function getPriceNumber(price) {
+
+        if (typeof price === "number") {
+            return price;
+        }
+
+        return parseInt(
+            String(price)
+                .replace(/\./g, "")
+                .replace(/đ/g, "")
+                .replace(/₫/g, "")
+                .replace(/\s/g, "")
+        ) || 0;
+    }
+
+
+    /* FORMAT GIÁ */
+
+    function formatPrice(price) {
+
+        return getPriceNumber(price)
+            .toLocaleString("vi-VN") + "đ";
+    }
+
+</script>

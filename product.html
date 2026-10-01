@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    <link rel="stylesheet"href="style.css">
+
+    <style>
+        body {
+            background-color: #97BDF0;
+            background-size:100%;
+        }
+    </style>
+</head>
+
+<body>
+
+   <h1>OUR PRODUCTS</h1>
+
+   <section class="product-list">
+
+    <!-- Product 1 -->
+
+     <div class="product-card1">
+        <img src="Images/product1.jpg" alt="Product 1">
+
+        <h2>Váy Trắng Trễ Vai</h2>
+
+        <p class="price">1.000.000đ</p>
+
+        <p class="description">
+            Áo corset trễ vai tay phồng kèm chân váy trắng. 
+            Thiết kế ôm eo, phối bèo nhún nữ tính và chi tiết dây đan phía trước.
+        </p>
+
+        <button onclick="addToCart(
+            'Váy Trắng Trễ Vai',
+            '1.000.000đ',
+            'Images/product1.jpg'
+         )">
+            CART
+        </button>
+     </div>
+
+     <!-- Product 2-->
+      
+      <div class="product-card2">
+        <img src="Images/product2.jpg" alt=""Product 2">
+
+        <h2>Set Váy Nấm</h2>
+
+        <p class="price">2.500.000đ</p>
+
+        <p class="description">
+            Set nấm bao gồm quần nấm hồng và áo thun bó dài tay xanh lá.
+        </p>
+
+        <button onclick="addToCart(
+            'Set Váy Nấm',
+            '2.500.000đ',
+            'Images/product2.jpg'
+         )">
+            CART
+        </button>
+
+
+      </div>
+
+    <!-- Product 3 -->
+
+       <div class="product-card3">
+        <img src="Images/product3.jpg" alt="Product 3">
+
+        <h2>Áo Xanh Thun Kiểu Nhún</h2>
+
+        <p class="price">700.000đ</p>
+
+        <p class="description">
+            Áo xanh kiểu thun nhún bèo phá cách.
+        </p>
+
+        <button onclick="addToCart(
+            'Áo Xanh Thun Kiểu Nhún',
+            '700.000đ',
+            'Images/product3.jpg'
+         )">
+            CART
+        </button>
+
+       </div>
+
+     <!-- Product 4 -->
+       
+       <div class="product-card4">
+        <img src="Images/product4.jpg" alt="Product 4">
+
+        <h2>Áo Thun Vàng Dài Tay</h2>
+
+        <p class="price">760.000đ</p>
+
+        <p class="description">
+            Áo thun vàng dài tay.
+        </p>
+
+        <button onclick="addToCart(
+            'Áo Thun Vàng Dài Tay',
+            '760.000đ',
+            'Images/product4.jpg'
+         )">
+            CART
+        </button>
+
+       </div>
+
+      
+        <!-- Product 5 -->
+
+        <div class="product-card5">
+         <img src="Images/product5.jpg" alt="Product 5">
+
+         <h2>Quần Thun Bèo Nhún</h2>
+
+         <p class="price">300.000đ</p>
+
+         <p class="description">
+             Quần thun nhún bèo bó sát màu nâu.
+         </p>
+
+          <button onclick="addToCart(
+            'Quần Thun Bèo Nhún',
+            '300.000đ',
+            'Images/product5.jpg'
+         )">
+            CART
+        </button>
+
+       </div>
+
+       <!-- Product 6 -->
+
+        <div class="product-card6">
+         <img src="Images/product6.jpg" alt="Product 6">
+
+         <h2>Set Áo Corset + Váy Vảy Cá</h2>
+
+         <p class="price">4.000.000đ</p>
+
+         <p class="description">
+             Set Áo Corset kèm váy thiết kế vảy cá màu vàng.
+         </p>
+
+          <button onclick="addToCart(
+            'Set Áo Corset + Váy Vảy Cá',
+            '4.000.000đ',
+            'Images/product6.jpg'
+         )">
+            CART
+        </button>
+
+       </div>
+
+       <!-- Product 7 -->
+
+        <div class="product-card7">
+         <img src="Images/product7.jpg" alt="Product 7">
+
+         <h2>Áo Khoác Gile Hồng</h2>
+
+         <p class="price">250.000đ</p>
+
+         <p class="description">
+             Áo khoác Gile mỏng nhẹ, chất liệu bông và màu hồng nữ tính.
+         </p>
+
+         <button onclick="addToCart(
+            'Áo Khoác Gile Hồng',
+            '250.000đ',
+            'Images/product7.jpg'
+         )">
+            CART
+        </button>
+
+       </div>
+
+       <!-- Product 8 -->
+
+        <div class="product-card8">
+         <img src="Images/product8.jpg" alt="Product 8">
+
+         <h2>Váy Corset Xám</h2>
+
+         <p class="price">4.000.000đ</p>
+
+         <p class="description">
+             Váy body Corset thiết kế dây rút buộc và đuôi hoa.
+         </p>
+
+         <button onclick="addToCart(
+            'Váy Corset Xám',
+            '4.000.000đ',
+            'Images/product8.jpg'
+         )">
+            CART
+        </button>
+
+       </div>
+
+       <!--PRODUCT 9 -->
+
+       <div class="product-card9">
+        <img src="Images/product9.jpg" alt="Product 9">
+
+        <h2>Váy Trắng Tầng</h2>
+
+        <p class="price">4.400.000đ</p>
+
+        <p class="description">
+            Váy trắng kiểu tầng tinh tế.
+        </p>
+
+        <button onclick="addToCart(
+            'Váy Trắng Tầng',
+            '4.400.000đ',
+            'Images/product9.jpg'
+         )">
+            CART
+        </button>
+
+       </div>
+
+       <!-- PRODUCT 10 -->
+
+       <div class="product-card10">
+        <img src="Images/product10.jpg" alt="Product 10">
+
+        <h2>Váy Kiểu Ba Tầng Hồng</h2>
+
+        <p class="price">5.000.000đ</p>
+
+        <p class="description">
+            Váy kiểu 3 tầng xòe màu hồng đính nơ.
+        </p>
+
+        <button onclick="addToCart(
+            'Váy Kiểu Ba Tầng Hồng',
+            '5.000.000đ',
+            'Images/product10.jpg'
+         )">
+            CART
+        </button>
+       </div>
+
+    <script src="script.js"></script>
+</body>
+
